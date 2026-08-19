@@ -1,0 +1,43 @@
+name: Build Theos App/Tweak
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Setup Theos
+      run: |
+        git clone --recursive https://github.com/theos/theos.git ~/theos
+        echo "THEOS=~/theos" >> $GITHUB_ENV
+
+    - name: Build Project
+      run: |
+        export THEOS=~/theos
+        make package
+      shell: bash
+
+    - name: Create Zip Archive
+      run: |
+        mkdir -p final_output
+        # Copia los paquetes generados (sea .ipa o .deb) a una carpeta temporal
+        cp -R packages/* final_output/ 2>/dev/null || true
+        # Comprime esa carpeta en un archivo .zip
+        cd final_output && zip -r ../CompiledAppPackage.zip *
+      shell: bash
+
+    - name: Upload Zip Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Compiled-App-Zip
+        path: CompiledAppPackage.zip
