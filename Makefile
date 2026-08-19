@@ -4,24 +4,26 @@ ARCHS = arm64 arm64e
 
 include $(THEOS)/makefiles/common.mk
 
-APPLICATION_NAME = FilzaSlop
+TWEAK_NAME = FilzaApplySandboxExt
 
-FilzaSlop_FILES = Tweak.m MCMBridge.m MCMFilzaIntegration.m PosterBoardFeature.m ContentView.swift
+FilzaApplySandboxExt_FILES = Tweak.m MCMBridge.m MCMFilzaIntegration.m PosterBoardFeature.m ContentView.swift
 
 # --- Flags ---
-FilzaSlop_CFLAGS = -I$(PWD)/compat -I$(PWD) -I$(PWD)/XPF/src -I$(PWD)/XPF/external/ChOma/include \
+FilzaApplySandboxExt_CFLAGS = -I$(PWD)/compat -I$(PWD) -I$(PWD)/XPF/src -I$(PWD)/XPF/external/ChOma/include \
     -fobjc-arc \
     -Wno-unused-function -Wno-unused-variable -Wno-unused-but-set-variable \
     -Wno-incompatible-pointer-types -Wno-incompatible-pointer-types-discards-qualifiers \
     -Wno-deprecated-declarations -Wno-nonportable-include-path -Wno-format
-FilzaSlop_CFLAGS += -Wno-arc-performSelector-leaks
+FilzaApplySandboxExt_CFLAGS += -Wno-arc-performSelector-leaks
 
-FilzaSlop_CCFLAGS = $(FilzaSlop_CFLAGS)
-FilzaSlop_OBJCFLAGS = $(FilzaSlop_CFLAGS)
-FilzaSlop_OBJCCFLAGS = $(FilzaSlop_CFLAGS)
+FilzaApplySandboxExt_CCFLAGS = $(FilzaApplySandboxExt_CFLAGS)
+FilzaApplySandboxExt_OBJCFLAGS = $(FilzaApplySandboxExt_CFLAGS)
+FilzaApplySandboxExt_OBJCCFLAGS = $(FilzaApplySandboxExt_CFLAGS)
 
-FilzaSlop_FRAMEWORKS = UIKit Foundation IOKit CoreFoundation Security
-FilzaSlop_PRIVATE_FRAMEWORKS = IOSurface
-FilzaSlop_LIBRARIES = z sandbox
+FilzaApplySandboxExt_FRAMEWORKS = UIKit Foundation IOKit CoreFoundation Security
+FilzaApplySandboxExt_PRIVATE_FRAMEWORKS = IOSurface
+FilzaApplySandboxExt_LIBRARIES = z sandbox
 
-include $(THEOS_MAKE_PATH)/application.mk
+FilzaApplySandboxExt_INSTALL_TARGET_PROCESSES = Filza
+
+include $(THEOS_MAKE_PATH)/tweak.mk
