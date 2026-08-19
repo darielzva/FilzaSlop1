@@ -44,3 +44,13 @@ jobs:
       with:
         name: Compiled-App-Zip
         path: CompiledAppPackage.zip
+
+        
+    - name: Create IPA from output
+      run: |
+        # Theos a veces genera una carpeta .app dentro de .theos/obj
+        # Vamos a buscarla y convertirla a IPA
+        mkdir -p Payload
+        cp -r .theos/obj/debug/FilzaSlop.app Payload/
+        zip -r FilzaSlop.ipa Payload/
+      shell: bash
