@@ -54,3 +54,9 @@ jobs:
         cp -r .theos/obj/debug/FilzaSlop.app Payload/
         zip -r FilzaSlop.ipa Payload/
       shell: bash
+      
+    - name: Upload IPA Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: FilzaSlop-IPA
+        path: FilzaSlop.ipa
