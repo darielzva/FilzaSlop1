@@ -1,30 +1,27 @@
-# Use the newest SDK bundled with this Theos installation.  ContainerManager
-# entry points are resolved at runtime, so private SDK headers are not needed.
+# Use the newest SDK bundled with this Theos installation.
 TARGET := iphone:clang:latest:15.0
 ARCHS = arm64 arm64e
 
 include $(THEOS)/makefiles/common.mk
 
-TWEAK_NAME = FilzaApplySandboxExt
+APPLICATION_NAME = FilzaSlop
 
-FilzaApplySandboxExt_FILES = Tweak.m MCMBridge.m MCMFilzaIntegration.m PosterBoardFeature.m ContentView.swift
+FilzaSlop_FILES = Tweak.m MCMBridge.m MCMFilzaIntegration.m PosterBoardFeature.m ContentView.swift
 
 # --- Flags ---
-FilzaApplySandboxExt_CFLAGS = -I$(PWD)/compat -I$(PWD) -I$(PWD)/XPF/src -I$(PWD)/XPF/external/ChOma/include \
+FilzaSlop_CFLAGS = -I$(PWD)/compat -I$(PWD) -I$(PWD)/XPF/src -I$(PWD)/XPF/external/ChOma/include \
     -fobjc-arc \
     -Wno-unused-function -Wno-unused-variable -Wno-unused-but-set-variable \
     -Wno-incompatible-pointer-types -Wno-incompatible-pointer-types-discards-qualifiers \
     -Wno-deprecated-declarations -Wno-nonportable-include-path -Wno-format
-FilzaApplySandboxExt_CFLAGS += -Wno-arc-performSelector-leaks
+FilzaSlop_CFLAGS += -Wno-arc-performSelector-leaks
 
-FilzaApplySandboxExt_CCFLAGS = $(FilzaApplySandboxExt_CFLAGS)
-FilzaApplySandboxExt_OBJCFLAGS = $(FilzaApplySandboxExt_CFLAGS)
-FilzaApplySandboxExt_OBJCCFLAGS = $(FilzaApplySandboxExt_CFLAGS)
+FilzaSlop_CCFLAGS = $(FilzaSlop_CFLAGS)
+FilzaSlop_OBJCFLAGS = $(FilzaSlop_CFLAGS)
+FilzaSlop_OBJCCFLAGS = $(FilzaSlop_CFLAGS)
 
-FilzaApplySandboxExt_FRAMEWORKS = UIKit Foundation IOKit CoreFoundation Security
-FilzaApplySandboxExt_PRIVATE_FRAMEWORKS = IOSurface
-FilzaApplySandboxExt_LIBRARIES = z sandbox
+FilzaSlop_FRAMEWORKS = UIKit Foundation IOKit CoreFoundation Security
+FilzaSlop_PRIVATE_FRAMEWORKS = IOSurface
+FilzaSlop_LIBRARIES = z sandbox
 
-FilzaApplySandboxExt_INSTALL_TARGET_PROCESSES = Filza
-
-include $(THEOS_MAKE_PATH)/tweak.mk
+include $(THEOS_MAKE_PATH)/application.mk
